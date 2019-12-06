@@ -1,6 +1,6 @@
 /**
  *  @file strutils.c
- *  @version 0.0.0
+ *  @version 0.0.1-dev0
  *  @date Fri Dec  6 11:12:35 CST 2019
  *  @copyright %COPYRIGHT%
  *  @brief FIXME
@@ -673,7 +673,7 @@ stru_trim(char *str)
 const char *
 stru_version(void)
 {
-   return "0.0.0";
+   return "0.0.1-dev0";
 }
 
 /*** stru_wordize() ***/

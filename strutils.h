@@ -1,6 +1,6 @@
 /**
  *  @file strutils.h
- *  @version 0.0.0
+ *  @version 0.0.1-dev0
  *  @date Fri Dec  6 11:12:35 CST 2019
  *  @copyright %COPYRIGHT%
  *  @brief Provides a number of string handling helpers.
