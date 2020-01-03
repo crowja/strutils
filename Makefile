@@ -59,8 +59,8 @@ indent: stamp
 	done
 
 stamp:
-	@bash stamper.bash strutils.c
-	@bash stamper.bash strutils.h
+	@stamper.bash strutils.c
+	@stamper.bash strutils.h
 
 clean:
 	@/bin/rm -f strutils.o *.o *~ *.BAK *.bak core.* a.out
