@@ -2,7 +2,8 @@
  *  @file strutils.h
  *  @version 0.0.1-dev0
  *  @date Fri Dec  6 11:12:35 CST 2019
- *  @copyright %COPYRIGHT%
+ *  @copyright 2020 John A. Crow <crowja@gmail.com>
+ *  @license Unlicense <http://unlicense.org/>
  *  @brief Provides a number of string handling helpers.
  *  @details FIXME
  */
