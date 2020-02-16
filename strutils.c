@@ -1,8 +1,8 @@
 /**
  *  @file strutils.c
  *  @version 0.1.0-dev0
- *  @date Fri Dec  6 11:12:35 CST 2019
- *  @copyright 2020 John A. Crow <crowja@gmail.com>
+ *  @date Sun Feb 16, 2020 05:15:23 PM CST
+ *  @copyright 2018-2020 John A. Crow <crowja@gmail.com>
  *  @license Unlicense <http://unlicense.org/>
  */
 
@@ -12,15 +12,15 @@
 #include <ctype.h>
 #include "strutils.h"
 
-#ifdef  _IS_NULL
-#undef  _IS_NULL
+#ifdef  IS_NULL
+#undef  IS_NULL
 #endif
-#define _IS_NULL(p)   ((NULL == (p)) ? (1) : (0))
+#define IS_NULL(p)   ((NULL == (p)) ? (1) : (0))
 
-#ifdef  _FREE
-#undef  _FREE
+#ifdef  FREE
+#undef  FREE
 #endif
-#define _FREE(p)      ((NULL == (p)) ? (0) : (free((p)), (p) = NULL))
+#define FREE(p)      ((NULL == (p)) ? (0) : (free((p)), (p) = NULL))
 
 /*** _catc() ***/
 
@@ -33,7 +33,7 @@ _catc(char c, unsigned *size, unsigned extend, char **str)
    if (pos + 1 > *size) {                        /* extend if necessary */
       tmp = realloc(*str, (*size + extend) * sizeof(char));
 
-      if (_IS_NULL(tmp))
+      if (IS_NULL(tmp))
          return 1;
 
       *size += 1 + extend;
@@ -53,7 +53,7 @@ stru_check(const char *cp, size_t n)
 {
    unsigned    i;
 
-   if (_IS_NULL(cp))
+   if (IS_NULL(cp))
       return 0;
 
    for (i = 0; i < n; i++)
@@ -108,9 +108,9 @@ stru_crush(char *str)
 char       *
 stru_dup(const char *str)
 {
-   char       *cp = _IS_NULL(str) ? NULL : malloc(strlen(str) + 1);
+   char       *cp = IS_NULL(str) ? NULL : malloc(strlen(str) + 1);
 
-   return _IS_NULL(cp) ? NULL : strcpy(cp, str);
+   return IS_NULL(cp) ? NULL : strcpy(cp, str);
 }
 
 /*** stru_is_ws() ***/
@@ -195,7 +195,7 @@ stru_split(char delim, char *str)
                   list[count - 1] = NULL;
                }
 
-               _FREE(work);
+               FREE(work);
                return list;
             }
 
@@ -294,12 +294,12 @@ stru_split(char delim, char *str)
 
  FAIL:
 
-   _FREE(work);
+   FREE(work);
 
    for (i = 0; i < count; i++)
-      _FREE(list[i]);
+      FREE(list[i]);
 
-   _FREE(list);
+   FREE(list);
 
    return NULL;
 }
@@ -345,7 +345,7 @@ stru_split_csv(char delim, char *str)
                   list[count - 1] = NULL;
                }
 
-               _FREE(work);
+               FREE(work);
                return list;
             }
 
@@ -444,12 +444,12 @@ stru_split_csv(char delim, char *str)
 
  FAIL:
 
-   _FREE(work);
+   FREE(work);
 
    for (i = 0; i < count; i++)
-      _FREE(list[i]);
+      FREE(list[i]);
 
-   _FREE(list);
+   FREE(list);
 
    return NULL;
 }
@@ -469,7 +469,7 @@ stru_splitpp(char delim, char *str, char **list)
    enum states { dquote, squote, uquote };  /* double-quoted, single-quoted, unquoted states */
    enum states state = uquote;
 
-   if (_IS_NULL(list)) {
+   if (IS_NULL(list)) {
       list = realloc(list, sizeof(char *));
       list[0] = NULL;
    }
@@ -501,7 +501,7 @@ stru_splitpp(char delim, char *str, char **list)
                   list[count - 1] = NULL;
                }
 
-               _FREE(work);
+               FREE(work);
                return count;                     /* FIXME */
             }
 
@@ -601,7 +601,7 @@ stru_splitpp(char delim, char *str, char **list)
 
  FAIL:
 
-   _FREE(work);
+   FREE(work);
 
    return 0;                                     /* FIXME */
 }
@@ -766,5 +766,5 @@ stru_wssplit(char *s)
    return list;
 }
 
-#undef _IS_NULL
-#undef _FREE
+#undef IS_NULL
+#undef FREE

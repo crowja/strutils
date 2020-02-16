@@ -4,32 +4,31 @@
 #include "strutils.h"
 #include "tinytest.h"
 
-
-#ifdef _COLOR_CODE
-#undef _COLOR_CODE
+#ifdef COLOR_CODE
+#undef COLOR_CODE
 #endif
-#define _COLOR_CODE      0x1B
-#ifdef _COLOR_RED
-#undef _COLOR_RED
+#define COLOR_CODE      0x1B
+#ifdef COLOR_RED
+#undef COLOR_RED
 #endif
-#define _COLOR_RED       "[1;31m"
-#ifdef _COLOR_GREEN
-#undef _COLOR_GREEN
+#define COLOR_RED       "[1;31m"
+#ifdef COLOR_GREEN
+#undef COLOR_GREEN
 #endif
-#define _COLOR_GREEN     "[1;32m"
-#ifdef _COLOR_YELLOW
-#undef _COLOR_YELLOW
+#define COLOR_GREEN     "[1;32m"
+#ifdef COLOR_YELLOW
+#undef COLOR_YELLOW
 #endif
-#define _COLOR_YELLOW    "[1;33m"
-#ifdef _COLOR_RESET
-#undef _COLOR_RESET
+#define COLOR_YELLOW    "[1;33m"
+#ifdef COLOR_RESET
+#undef COLOR_RESET
 #endif
-#define _COLOR_RESET     "[0m"
+#define COLOR_RESET     "[0m"
 
 static void
-_printf_test_name(char *name, char *info)
+printf_test_name(char *name, char *info)
 {
-   printf("%c%s%s%c%s", _COLOR_CODE, _COLOR_YELLOW, name, _COLOR_CODE, _COLOR_RESET);
+   printf("%c%s%s%c%s", COLOR_CODE, COLOR_YELLOW, name, COLOR_CODE, COLOR_RESET);
 
    if (NULL != info)
       printf(" [%s]\n", info);
@@ -56,7 +55,7 @@ test_check(void)
 {
    char       *cp = malloc(10000);
 
-   _printf_test_name("test_check", NULL);
+   printf_test_name("test_check", NULL);
    memset(cp, 'a', 10000);
    ASSERT_EQUALS(0, stru_check(cp, 100));
    free(cp);
@@ -68,7 +67,7 @@ test_chomp(void)
    char        test_str0[] = "This is to be chomped";
    char        test_str1[] = "This is to be chomped\n\n\n";
 
-   _printf_test_name("test_chomp", NULL);
+   printf_test_name("test_chomp", NULL);
 
    ASSERT_STRING_EQUALS(test_str0, stru_chomp(test_str1));
 }
@@ -79,7 +78,7 @@ test_crush(void)
    char        test_str0[] = "Thisistobecrushed";
    char        test_str1[] = "\r\n   \nThi\n s is to be\r  crushed\n\n\n";
 
-   _printf_test_name("test_crush", NULL);
+   printf_test_name("test_crush", NULL);
 
    ASSERT_STRING_EQUALS(test_str0, stru_crush(test_str1));
 }
@@ -90,7 +89,7 @@ test_dup(void)
    char        test_str[] = "This is to be\r\nduplicated";
    char       *cp;
 
-   _printf_test_name("test_dup", "stru_dup");
+   printf_test_name("test_dup", "stru_dup");
 
    cp = stru_dup(test_str);
    ASSERT_STRING_EQUALS(test_str, cp);
@@ -106,7 +105,7 @@ test_is_ws(void)
    char        test_str1[] = "\r\n   \n \n \r  \n\n\n\r";
    char        test_str2[] = "\r\n   \ni\n \rab\n\n\n\r";
 
-   _printf_test_name("test_is_ws", NULL);
+   printf_test_name("test_is_ws", NULL);
 
    ASSERT_EQUALS(1, stru_is_ws(test_str1));
    ASSERT_EQUALS(0, stru_is_ws(test_str2));
@@ -119,7 +118,7 @@ test_lcat(void)
    char       *s1 = malloc(10);
    char       *s2 = malloc(10);
 
-   _printf_test_name("test_lcat", NULL);
+   printf_test_name("test_lcat", NULL);
 
    *s1 = '\0';
    *s2 = '\0';
@@ -141,7 +140,7 @@ test_split_1(void)
    char      **list = stru_split('\t', "now\t'Is\tthe' time for\tall good dogs \t\ta");
    char      **cp;
 
-   _printf_test_name("test_split_1", NULL);
+   printf_test_name("test_split_1", NULL);
 
    ASSERT_STRING_EQUALS("now", list[0]);
    ASSERT_STRING_EQUALS("Is\tthe time for", list[1]);   /* single quotes removed */
@@ -168,7 +167,7 @@ test_splitpp(void)
    char      **cp;
    unsigned    ret;
 
-   _printf_test_name("test_splitpp", NULL);
+   printf_test_name("test_splitpp", NULL);
 
    /* stru_splitpp(char delim, char *str, char **list) */
    ret = stru_splitpp('\t', "now\t'Is\tthe' time for\tall good dogs \t\ta", list);
@@ -198,7 +197,7 @@ test_tolower(void)
 {
    char        str[] = "My Dog Has Fleas!!!";
 
-   _printf_test_name("test_tolower", NULL);
+   printf_test_name("test_tolower", NULL);
 
    ASSERT_STRING_EQUALS("my dog has fleas!!!", stru_tolower(str));
 }
@@ -208,7 +207,7 @@ test_toupper(void)
 {
    char        str[] = "My Dog Has Fleas!!!";
 
-   _printf_test_name("test_toupper", NULL);
+   printf_test_name("test_toupper", NULL);
 
    ASSERT_STRING_EQUALS("MY DOG HAS FLEAS!!!", stru_toupper(str));
 }
@@ -218,7 +217,7 @@ test_trim(void)
 {
    char        str[] = "\t\t   no whitespace left or right! \r\n  ";
 
-   _printf_test_name("test_trim", NULL);
+   printf_test_name("test_trim", NULL);
 
    ASSERT_STRING_EQUALS("no whitespace left or right!", stru_trim(str));
 
@@ -231,7 +230,7 @@ test_wssplit(void)
    char      **list;
    char      **cp;
 
-   _printf_test_name("test_wssplit", NULL);
+   printf_test_name("test_wssplit", NULL);
 
    list = stru_wssplit("now\tIs\tthe time for\tall good dogs \t\ta");
    ASSERT_STRING_EQUALS("now", list[0]);
