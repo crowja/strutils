@@ -57,6 +57,12 @@ unsigned  stru_isspace(char *str);
 char     *stru_lcat(char **str1, char **str2);
 
 /**
+ *  @brief Test the first non-whitespace character.
+ *  @details Check if the first non-whitespace character of str is c.
+ */
+int       stru_leadswith(char *str, char c);
+
+/**
  *  @brief Split a string.
  *  @details Return a NULL-terminated list of strings obtained by splitting string
  *  str on the delimiter delim. Single- and double-quoted protection of delimiters

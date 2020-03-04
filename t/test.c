@@ -93,6 +93,15 @@ test_lcat(void)
    free(s2);
 }
 
+static void
+test_leadswith(void)
+{
+   fprintf_test_info(stdout, "test_leadswith", "stru_leadswith");
+   ASSERT_EQUALS(0, stru_leadswith(" \t\r  my dog has fleas", '#'));
+   ASSERT_EQUALS(0, stru_leadswith("                       ", '#'));
+   ASSERT_EQUALS(1, stru_leadswith(" \t\r #my dog has fleas", '#'));
+   ASSERT_EQUALS(0, stru_leadswith("                  ", ' '));
+}
 
 static void
 test_split_1(void)
@@ -216,6 +225,7 @@ main(void)
    RUN(test_dup);
    RUN(test_isspace);
    RUN(test_lcat);
+   RUN(test_leadswith);
    RUN(test_split_1);
 
    /** FIXME. Not sure how to invoke this function correctly, and

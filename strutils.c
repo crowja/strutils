@@ -140,6 +140,21 @@ stru_lcat(char **str1, char **str2)
    return *str1;
 }
 
+int
+stru_leadswith(char *str, char c)
+{
+   size_t    i;
+   size_t    len = strlen(str);
+
+   for (i = 0; i < len; i++)
+      if (!isspace(str[i]))
+         break;
+
+   /* printf("i is %ld len is %ld\n", i, len); */
+
+   return str[i] == c ? 1 : 0;
+}
+
 char    **
 stru_split(char delim, char *str)
 {
