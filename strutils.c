@@ -22,13 +22,11 @@
 #endif
 #define FREE(p)      ((NULL == (p)) ? (0) : (free((p)), (p) = NULL))
 
-/*** _catc() ***/
-
 static int
 _catc(char c, unsigned *size, unsigned extend, char **str)
 {
-   unsigned    pos = strlen(*str);
-   char       *tmp;
+   unsigned  pos = strlen(*str);
+   char     *tmp;
 
    if (pos + 1 > *size) {                        /* extend if necessary */
       tmp = realloc(*str, (*size + extend) * sizeof(char));
@@ -46,12 +44,10 @@ _catc(char c, unsigned *size, unsigned extend, char **str)
    return 0;
 }
 
-/*** stru_check() ***/
-
 int
 stru_check(const char *cp, size_t n)
 {
-   unsigned    i;
+   unsigned  i;
 
    if (IS_NULL(cp))
       return 0;
@@ -63,12 +59,10 @@ stru_check(const char *cp, size_t n)
    return 0;
 }
 
-/*** stru_chomp() ***/
-
-char       *
+char     *
 stru_chomp(char *str)
 {
-   unsigned    i = strlen(str);
+   unsigned  i = strlen(str);
 
    while (i > 0) {
       i--;
@@ -81,14 +75,12 @@ stru_chomp(char *str)
    return str;
 }
 
-/*** stru_crush() ***/
-
-char       *
+char     *
 stru_crush(char *str)
 {
-   unsigned    i = 0;
-   unsigned    j = 0;
-   unsigned    len = strlen(str);
+   unsigned  i = 0;
+   unsigned  j = 0;
+   unsigned  len = strlen(str);
 
    while (i < len) {
       if (!isspace(str[i])) {
@@ -103,22 +95,18 @@ stru_crush(char *str)
    return str;
 }
 
-/*** stru_dup() ***/
-
-char       *
+char     *
 stru_dup(const char *str)
 {
-   char       *cp = IS_NULL(str) ? NULL : malloc(strlen(str) + 1);
+   char     *cp = IS_NULL(str) ? NULL : malloc(strlen(str) + 1);
 
    return IS_NULL(cp) ? NULL : strcpy(cp, str);
 }
 
-/*** stru_is_ws() ***/
-
 unsigned
-stru_is_ws(char *str)
+stru_isspace(char *str)
 {
-   unsigned    i;
+   unsigned  i;
 
    for (i = 0; i < strlen(str); i++)
       if (!isspace(str[i]))
@@ -127,12 +115,10 @@ stru_is_ws(char *str)
    return 1;
 }
 
-/*** stru_lcat() ***/
-
-char       *
+char     *
 stru_lcat(char **str1, char **str2)
 {
-   unsigned    need;
+   unsigned  need;
 
    if (NULL == *str1) {
       if (NULL != *str2) {
@@ -154,18 +140,16 @@ stru_lcat(char **str1, char **str2)
    return *str1;
 }
 
-/*** stru_split() ***/
-
-char      **
+char    **
 stru_split(char delim, char *str)
 {
-   unsigned    count = 0;
-   unsigned    i;
-   unsigned    extend = 64;
-   unsigned    size = 0;
-   char       *work = NULL;
-   char       *cp = str;
-   char      **list = NULL;
+   unsigned  count = 0;
+   unsigned  i;
+   unsigned  extend = 64;
+   unsigned  size = 0;
+   char     *work = NULL;
+   char     *cp = str;
+   char    **list = NULL;
    enum states { dquote, squote, uquote };  /* double-quoted, single-quoted, unquoted states */
    enum states state = uquote;
 
@@ -304,18 +288,16 @@ stru_split(char delim, char *str)
    return NULL;
 }
 
-/*** stru_split_csv() ***/
-
-char      **
+char    **
 stru_split_csv(char delim, char *str)
 {
-   unsigned    count = 0;
-   unsigned    i;
-   unsigned    extend = 64;
-   unsigned    size = 0;
-   char       *work = NULL;
-   char       *cp = str;
-   char      **list = NULL;
+   unsigned  count = 0;
+   unsigned  i;
+   unsigned  extend = 64;
+   unsigned  size = 0;
+   char     *work = NULL;
+   char     *cp = str;
+   char    **list = NULL;
    enum states { dquote, squote, uquote };  /* double-quoted, single-quoted, unquoted states */
    enum states state = uquote;
 
@@ -454,17 +436,15 @@ stru_split_csv(char delim, char *str)
    return NULL;
 }
 
-/*** stru_splitpp() ***/
-
 /* FIXME ... need to have char ***list */
 unsigned
 stru_splitpp(char delim, char *str, char **list)
 {
-   unsigned    count = 0;
-   unsigned    extend = 64;
-   unsigned    size = 0;
-   char       *work = NULL;
-   char       *cp = str;
+   unsigned  count = 0;
+   unsigned  extend = 64;
+   unsigned  size = 0;
+   char     *work = NULL;
+   char     *cp = str;
 
    enum states { dquote, squote, uquote };  /* double-quoted, single-quoted, unquoted states */
    enum states state = uquote;
@@ -606,42 +586,37 @@ stru_splitpp(char delim, char *str, char **list)
    return 0;                                     /* FIXME */
 }
 
-/*** stru_tolower() ***/
-
-char       *
+char     *
 stru_tolower(char *str)
 {
-   unsigned    i;
+   unsigned  i;
+   unsigned  len = strlen(str);
 
-   for (i = 0; i < strlen(str); i++)
+   for (i = 0; i < len; i++)
       str[i] = tolower(str[i]);
 
    return str;
 }
 
-/*** stru_toupper() ***/
-
-char       *
+char     *
 stru_toupper(char *str)
 {
-   unsigned    i;
+   unsigned  i;
+   unsigned  len = strlen(str);
 
-   for (i = 0; i < strlen(str); i++)
+   for (i = 0; i < len; i++)
       str[i] = toupper(str[i]);
 
    return str;
 }
 
-/*** stru_trim() ***/
-
-char       *
+char     *
 stru_trim(char *str)
 {
-   unsigned    i;
-   unsigned    j;
-   unsigned    len;
+   unsigned  i;
+   unsigned  j;
+   unsigned  len = strlen(str);
 
-   len = strlen(str);
    i = len;
 
    while (i > 0) {
@@ -667,20 +642,16 @@ stru_trim(char *str)
    return str;
 }
 
-/*** stru_version() ***/
-
 const char *
 stru_version(void)
 {
    return "0.1.0-dev0";
 }
 
-/*** stru_wordize() ***/
-
 void
 stru_wordize(FILE *fh)
 {
-   int         c;
+   int       c;
    enum states { s_start, s_inword };
    enum states state = s_start;
 
@@ -707,15 +678,13 @@ stru_wordize(FILE *fh)
    }
 }
 
-/*** stru_wssplit() ***/
-
-char      **
+char    **
 stru_wssplit(char *s)
 {
-   char      **list;
-   unsigned    len;
-   unsigned    pos;
-   unsigned    from = 0;
+   char    **list;
+   unsigned  len;
+   unsigned  pos;
+   unsigned  from = 0;
    enum states { nws, ws };
    enum states state = ws;
 
@@ -724,7 +693,7 @@ stru_wssplit(char *s)
    len = 1;
 
    for (pos = 0; pos < strlen(s); pos++) {
-      char        c = s[pos];
+      char      c = s[pos];
 
       if (state == ws) {
          if (isspace(c))

@@ -3,145 +3,105 @@
 #include <string.h>
 #include "strutils.h"
 #include "tinytest.h"
+#include "tinyhelp.h"
 
-#ifdef COLOR_CODE
-#undef COLOR_CODE
+#if 0
+void      test_check(void);
+void      test_chomp(void);
+void      test_crush(void);
+void      test_dup(void);
+void      test_isspace(void);
+void      test_lcat(void);
+void      test_split_1(void);
+void      test_splitpp(void);
+void      test_tolower(void);
+void      test_toupper(void);
+void      test_trim(void);
+void      test_trim_ip(void);
+void      test_wssplit(void);
 #endif
-#define COLOR_CODE      0x1B
-#ifdef COLOR_RED
-#undef COLOR_RED
-#endif
-#define COLOR_RED       "[1;31m"
-#ifdef COLOR_GREEN
-#undef COLOR_GREEN
-#endif
-#define COLOR_GREEN     "[1;32m"
-#ifdef COLOR_YELLOW
-#undef COLOR_YELLOW
-#endif
-#define COLOR_YELLOW    "[1;33m"
-#ifdef COLOR_RESET
-#undef COLOR_RESET
-#endif
-#define COLOR_RESET     "[0m"
 
 static void
-printf_test_name(char *name, char *info)
-{
-   printf("%c%s%s%c%s", COLOR_CODE, COLOR_YELLOW, name, COLOR_CODE, COLOR_RESET);
-
-   if (NULL != info)
-      printf(" [%s]\n", info);
-   else
-      printf("\n");
-}
-
-void        test_check(void);
-void        test_chomp(void);
-void        test_crush(void);
-void        test_dup(void);
-void        test_is_ws(void);
-void        test_lcat(void);
-void        test_split_1(void);
-void        test_splitpp(void);
-void        test_tolower(void);
-void        test_toupper(void);
-void        test_trim(void);
-void        test_trim_ip(void);
-void        test_wssplit(void);
-
-void
 test_check(void)
 {
-   char       *cp = malloc(10000);
-
-   printf_test_name("test_check", NULL);
+   char     *cp = malloc(10000);
+   fprintf_test_info(stdout, "test_check", "stru_check");
    memset(cp, 'a', 10000);
    ASSERT_EQUALS(0, stru_check(cp, 100));
    free(cp);
 }
 
-void
+static void
 test_chomp(void)
 {
-   char        test_str0[] = "This is to be chomped";
-   char        test_str1[] = "This is to be chomped\n\n\n";
+   char      test_str0[] = "This is to be chomped";
+   char      test_str1[] = "This is to be chomped\n\n\n";
 
-   printf_test_name("test_chomp", NULL);
-
+   fprintf_test_info(stdout, "test_chomp", "stru_chomp");
    ASSERT_STRING_EQUALS(test_str0, stru_chomp(test_str1));
 }
 
-void
+static void
 test_crush(void)
 {
-   char        test_str0[] = "Thisistobecrushed";
-   char        test_str1[] = "\r\n   \nThi\n s is to be\r  crushed\n\n\n";
+   char      test_str0[] = "Thisistobecrushed";
+   char      test_str1[] = "\r\n   \nThi\n s is to be\r  crushed\n\n\n";
 
-   printf_test_name("test_crush", NULL);
-
+   fprintf_test_info(stdout, "test_crush", "stru_crush");
    ASSERT_STRING_EQUALS(test_str0, stru_crush(test_str1));
 }
 
-void
+static void
 test_dup(void)
 {
-   char        test_str[] = "This is to be\r\nduplicated";
-   char       *cp;
+   char      test_str[] = "This is to be\r\nduplicated";
+   char     *cp;
 
-   printf_test_name("test_dup", "stru_dup");
-
+   fprintf_test_info(stdout, "test_dup", "stru_dup");
    cp = stru_dup(test_str);
    ASSERT_STRING_EQUALS(test_str, cp);
    free(cp);
-
    cp = stru_dup(NULL);
    ASSERT_EQUALS(NULL, cp);
 }
 
-void
-test_is_ws(void)
+static void
+test_isspace(void)
 {
-   char        test_str1[] = "\r\n   \n \n \r  \n\n\n\r";
-   char        test_str2[] = "\r\n   \ni\n \rab\n\n\n\r";
+   char      test_str1[] = "\r\n   \n \n \r  \n\n\n\r";
+   char      test_str2[] = "\r\n   \ni\n \rab\n\n\n\r";
 
-   printf_test_name("test_is_ws", NULL);
-
-   ASSERT_EQUALS(1, stru_is_ws(test_str1));
-   ASSERT_EQUALS(0, stru_is_ws(test_str2));
+   fprintf_test_info(stdout, "test_isspace", "stru_isspace");
+   ASSERT_EQUALS(1, stru_isspace(test_str1));
+   ASSERT_EQUALS(0, stru_isspace(test_str2));
 }
 
 
-void
+static void
 test_lcat(void)
 {
-   char       *s1 = malloc(10);
-   char       *s2 = malloc(10);
+   char     *s1 = malloc(10);
+   char     *s2 = malloc(10);
 
-   printf_test_name("test_lcat", NULL);
-
+   fprintf_test_info(stdout, "test_lcat", "stru_lcat");
    *s1 = '\0';
    *s2 = '\0';
-
    strcat(s1, "string1");
    strcat(s2, "string2");
-
    ASSERT_STRING_EQUALS("string1string2", stru_lcat(&s1, &s2));
-
    free(s1);
    free(s2);
 }
 
 
-void
+static void
 test_split_1(void)
 {
 
-   char      **list = stru_split('\t', "now\t'Is\tthe' time for\tall good dogs \t\ta");
-   char      **cp;
+   char    **list = stru_split('\t', "now\t'Is\tthe' time for\tall good dogs \t\ta");
+   char    **cp;
 
-   printf_test_name("test_split_1", NULL);
-
+   fprintf_test_info(stdout, "test_split_1", "stru_split");
    ASSERT_STRING_EQUALS("now", list[0]);
    ASSERT_STRING_EQUALS("Is\tthe time for", list[1]);   /* single quotes removed */
    ASSERT_STRING_EQUALS("all good dogs ", list[2]);
@@ -159,16 +119,15 @@ test_split_1(void)
    free(list);
 }
 
-void
+static void
 test_splitpp(void)
 {
 
-   char      **list = NULL;
-   char      **cp;
-   unsigned    ret;
+   char    **list = NULL;
+   char    **cp;
+   unsigned  ret;
 
-   printf_test_name("test_splitpp", NULL);
-
+   fprintf_test_info(stdout, "test_splitpp", "stru_splitpp");
    /* stru_splitpp(char delim, char *str, char **list) */
    ret = stru_splitpp('\t', "now\t'Is\tthe' time for\tall good dogs \t\ta", list);
 
@@ -192,46 +151,41 @@ test_splitpp(void)
    free(list);
 }
 
-void
+static void
 test_tolower(void)
 {
-   char        str[] = "My Dog Has Fleas!!!";
+   char      str[] = "My Dog Has Fleas!!!";
 
-   printf_test_name("test_tolower", NULL);
-
+   fprintf_test_info(stdout, "test_tolower", "stru_tolower");
    ASSERT_STRING_EQUALS("my dog has fleas!!!", stru_tolower(str));
 }
 
-void
+static void
 test_toupper(void)
 {
-   char        str[] = "My Dog Has Fleas!!!";
+   char      str[] = "My Dog Has Fleas!!!";
 
-   printf_test_name("test_toupper", NULL);
-
+   fprintf_test_info(stdout, "test_toupper", "stru_toupper");
    ASSERT_STRING_EQUALS("MY DOG HAS FLEAS!!!", stru_toupper(str));
 }
 
-void
+static void
 test_trim(void)
 {
-   char        str[] = "\t\t   no whitespace left or right! \r\n  ";
+   char      str[] = "\t\t   no whitespace left or right! \r\n  ";
 
-   printf_test_name("test_trim", NULL);
-
+   fprintf_test_info(stdout, "test_trim", "stru_trim");
    ASSERT_STRING_EQUALS("no whitespace left or right!", stru_trim(str));
-
 }
 
-void
+static void
 test_wssplit(void)
 {
 
-   char      **list;
-   char      **cp;
+   char    **list;
+   char    **cp;
 
-   printf_test_name("test_wssplit", NULL);
-
+   fprintf_test_info(stdout, "test_wssplit", "stru_wssplit");
    list = stru_wssplit("now\tIs\tthe time for\tall good dogs \t\ta");
    ASSERT_STRING_EQUALS("now", list[0]);
    ASSERT_STRING_EQUALS("Is", list[1]);
@@ -251,7 +205,6 @@ test_wssplit(void)
    free(list);
 }
 
-
 int
 main(void)
 {
@@ -261,7 +214,7 @@ main(void)
    RUN(test_chomp);
    RUN(test_crush);
    RUN(test_dup);
-   RUN(test_is_ws);
+   RUN(test_isspace);
    RUN(test_lcat);
    RUN(test_split_1);
 
