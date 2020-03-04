@@ -1,6 +1,6 @@
 /**
  *  @file strutils.c
- *  @version 0.1.0-dev0
+ *  @version 0.2.0-dev0
  *  @date Sun Feb 16, 2020 05:15:23 PM CST
  *  @copyright 2018-2020 John A. Crow <crowja@gmail.com>
  *  @license Unlicense <http://unlicense.org/>
@@ -645,7 +645,7 @@ stru_trim(char *str)
 const char *
 stru_version(void)
 {
-   return "0.1.0-dev0";
+   return "0.2.0-dev0";
 }
 
 void
